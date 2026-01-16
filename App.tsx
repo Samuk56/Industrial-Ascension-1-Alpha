@@ -312,9 +312,9 @@ const App: React.FC = () => {
         manualClickPower={manualClickPower}
       />
 
-      {/* FLOATING HUD - HEADER */}
+      {/* FLOATING HUD - HEADER (Glassmorphism) */}
       <div className="absolute top-0 inset-x-0 p-8 flex flex-col items-center pointer-events-none z-10">
-        <header className="glass px-12 py-6 rounded-full flex items-center space-x-12 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.8)] border border-white/10 pointer-events-auto">
+        <header className="glass px-12 py-6 rounded-full flex items-center space-x-12 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.8)] border border-white/20 pointer-events-auto">
           <div className="flex items-center space-x-4 border-r border-white/10 pr-10">
             <span className="text-3xl">🏛️</span>
             <div>
@@ -348,24 +348,24 @@ const App: React.FC = () => {
         🛠️
       </button>
 
-      {/* FULL-SCREEN SHOP MODAL */}
+      {/* FULL-SCREEN SHOP MODAL (Glassmorphism) */}
       {isShopOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-20 bg-slate-950/80 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-300">
-          <div className="w-full max-w-6xl glass rounded-[4rem] border border-white/10 shadow-[0_0_150px_rgba(0,0,0,1)] flex flex-col max-h-full overflow-hidden">
-            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-20 bg-black/30 animate-in fade-in zoom-in-95 duration-300">
+          <div className="w-full max-w-6xl glass rounded-[4rem] border border-white/20 shadow-[0_0_150px_rgba(0,0,0,1)] flex flex-col max-h-full overflow-hidden">
+            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-white/5">
               <div>
                 <h2 className="text-4xl font-[900] text-white tracking-tighter uppercase">Arquitetura de Destino</h2>
-                <p className="text-slate-500 text-[10px] font-black tracking-[0.4em] uppercase mt-2 opacity-60">Planeje a expansão da sua supremacia industrial</p>
+                <p className="text-slate-300 text-[10px] font-black tracking-[0.4em] uppercase mt-2 opacity-60">Planeje a expansão da sua supremacia industrial</p>
               </div>
               <button 
                 onClick={() => setIsShopOpen(false)}
-                className="w-16 h-16 rounded-full bg-slate-800 hover:bg-rose-500 text-white flex items-center justify-center text-2xl transition-all border border-white/10"
+                className="w-16 h-16 rounded-full bg-slate-800/50 hover:bg-rose-500/80 text-white flex items-center justify-center text-2xl transition-all border border-white/10"
               >
                 ✕
               </button>
             </div>
 
-            <div className="flex-grow overflow-y-auto p-12 space-y-16 custom-scrollbar">
+            <div className="flex-grow overflow-y-auto p-12 space-y-16 custom-scrollbar bg-transparent">
               {/* Inovações Tecnológicas */}
               {availableTechs.length > 0 && (
                 <section>
@@ -376,12 +376,12 @@ const App: React.FC = () => {
                     {availableTechs.map(t => {
                       const canAfford = Object.entries(t.cost).every(([res, cost]) => (resources[res as ResourceType]?.amount ?? 0) >= (cost ?? 0));
                       return (
-                        <div key={t.id} className="p-10 bg-slate-900/40 rounded-[3rem] border border-amber-500/10 group hover:border-amber-500/40 transition-all flex justify-between items-center gap-8 shadow-inner">
+                        <div key={t.id} className="p-10 bg-white/5 rounded-[3rem] border border-amber-500/10 group hover:border-amber-500/40 transition-all flex justify-between items-center gap-8 shadow-inner">
                           <div className="space-y-4">
                             <h4 className="text-2xl font-black text-amber-50 uppercase tracking-tight">{t.name}</h4>
-                            <p className="text-[12px] text-slate-400 italic leading-relaxed font-medium">"{t.description}"</p>
+                            <p className="text-[12px] text-slate-300 italic leading-relaxed font-medium">"{t.description}"</p>
                           </div>
-                          <button onClick={() => researchTech(t.id)} disabled={!canAfford} className={`shrink-0 px-8 py-6 rounded-full font-black text-xs uppercase tracking-widest transition-all flex flex-col items-center gap-2 ${canAfford ? 'bg-amber-600 hover:bg-amber-500 text-white' : 'bg-slate-800 text-slate-600 cursor-not-allowed'}`}>
+                          <button onClick={() => researchTech(t.id)} disabled={!canAfford} className={`shrink-0 px-8 py-6 rounded-full font-black text-xs uppercase tracking-widest transition-all flex flex-col items-center gap-2 ${canAfford ? 'bg-amber-600 hover:bg-amber-500 text-white' : 'bg-white/10 text-slate-500 cursor-not-allowed'}`}>
                             <span>Dominar</span>
                             <div className="flex gap-2 text-[9px] opacity-80">
                                {Object.entries(t.cost).map(([res, cost]) => (
@@ -412,17 +412,17 @@ const App: React.FC = () => {
                     const percentIncrease = b.level > 0 ? (1 / b.level) * 100 : 100;
 
                     return (
-                      <div key={b.id} className="p-12 bg-slate-900/30 rounded-[4rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-12 group hover:bg-slate-900/50 transition-all shadow-2xl">
+                      <div key={b.id} className="p-12 bg-white/5 rounded-[4rem] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-12 group hover:bg-white/10 transition-all shadow-2xl">
                         <div className="flex items-center space-x-12">
-                          <div className="w-36 h-36 bg-slate-950 rounded-[3rem] flex items-center justify-center text-7xl emoji shadow-[inset_0_4px_30px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500">
+                          <div className="w-36 h-36 bg-slate-950/40 rounded-[3rem] flex items-center justify-center text-7xl emoji shadow-[inset_0_4px_30px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500">
                             {BUILDING_ICONS[b.id]}
                           </div>
                           <div className="max-w-md">
                             <div className="flex items-center space-x-6 mb-4">
                               <h4 className="text-4xl font-black text-white uppercase tracking-tighter">{b.name}</h4>
-                              <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-5 py-2 rounded-full font-black text-xs">x{b.count}</div>
+                              <div className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 px-5 py-2 rounded-full font-black text-xs">x{b.count}</div>
                             </div>
-                            <p className="text-sm text-slate-400 font-bold italic opacity-70 leading-relaxed">"{b.description}"</p>
+                            <p className="text-sm text-slate-200 font-bold italic opacity-70 leading-relaxed">"{b.description}"</p>
                           </div>
                         </div>
 
@@ -430,7 +430,7 @@ const App: React.FC = () => {
                           <button 
                             onClick={() => buyBuilding(b.id)}
                             disabled={!canAffordBuy}
-                            className={`py-8 px-12 rounded-[2.5rem] font-black text-xs uppercase tracking-widest transition-all flex flex-col items-center gap-2 ${canAffordBuy ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-2xl' : 'bg-slate-800 text-slate-700 cursor-not-allowed'}`}
+                            className={`py-8 px-12 rounded-[2.5rem] font-black text-xs uppercase tracking-widest transition-all flex flex-col items-center gap-2 ${canAffordBuy ? 'bg-emerald-600/80 hover:bg-emerald-500 text-white shadow-2xl' : 'bg-white/10 text-slate-600 cursor-not-allowed'}`}
                           >
                             <span>Expandir (+1)</span>
                             <div className="flex gap-2 text-[10px] font-mono opacity-80">
@@ -443,7 +443,7 @@ const App: React.FC = () => {
                           <button 
                             onClick={() => upgradeBuilding(b.id)}
                             disabled={!canAffordUpgrade || b.count === 0 || !isCorrectEraForUpgrade}
-                            className={`py-8 px-12 rounded-[2.5rem] font-black text-xs uppercase tracking-widest border-4 transition-all flex flex-col items-center gap-2 group/upgrade ${canAffordUpgrade && b.count > 0 && isCorrectEraForUpgrade ? 'border-amber-600/40 text-amber-500 hover:bg-amber-600 hover:text-white shadow-xl' : 'border-slate-800 text-slate-800 cursor-not-allowed'}`}
+                            className={`py-8 px-12 rounded-[2.5rem] font-black text-xs uppercase tracking-widest border-4 transition-all flex flex-col items-center gap-2 group/upgrade ${canAffordUpgrade && b.count > 0 && isCorrectEraForUpgrade ? 'border-amber-600/40 text-amber-500 hover:bg-amber-600/80 hover:text-white shadow-xl' : 'border-white/10 text-slate-700 cursor-not-allowed'}`}
                           >
                             <span>Evoluir Nível {b.level + 1}</span>
                             {!isCorrectEraForUpgrade ? (
@@ -465,7 +465,7 @@ const App: React.FC = () => {
               </section>
             </div>
             
-            <div className="p-10 bg-slate-900/60 border-t border-white/5 flex justify-center text-[10px] text-slate-600 font-black uppercase tracking-[2em] opacity-40">
+            <div className="p-10 bg-white/5 border-t border-white/5 flex justify-center text-[10px] text-slate-400 font-black uppercase tracking-[2em] opacity-40">
                Controle Geopolítico V4.0
             </div>
           </div>
