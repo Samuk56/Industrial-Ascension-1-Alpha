@@ -177,6 +177,22 @@ const App: React.FC = () => {
   const [technologies, setTechnologies] = useState<Technology[]>(TECHNOLOGIES_DATA);
   const [manualClickPower, setManualClickPower] = useState(1);
   const [isShopOpen, setIsShopOpen] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+
+  // PWA Install Logic
+  useEffect(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    });
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+    if (outcome === 'accepted') setInstallPrompt(null);
+  };
 
   const getBuildingCost = (b: Building) => {
     const multiplier = Math.pow(1.01, b.count);
@@ -336,6 +352,16 @@ const App: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {/* INSTALL BUTTON */}
+          {installPrompt && (
+            <button 
+              onClick={handleInstallClick}
+              className="ml-4 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-[10px] uppercase tracking-widest px-6 py-3 rounded-full shadow-lg transition-all"
+            >
+              🚀 Instalar Jogo
+            </button>
+          )}
         </header>
       </div>
 
@@ -347,7 +373,7 @@ const App: React.FC = () => {
         🛠️
       </button>
 
-      {/* SHOP MODAL (More compact version) */}
+      {/* SHOP MODAL */}
       {isShopOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-black/20 animate-in fade-in zoom-in-95 duration-200">
           <div className="w-full max-w-4xl glass rounded-[3rem] flex flex-col max-h-[90vh] overflow-hidden border border-white/20">
@@ -462,7 +488,7 @@ const App: React.FC = () => {
             </div>
             
             <div className="p-4 bg-white/5 border-t border-white/10 flex justify-center text-[8px] text-slate-500 font-black uppercase tracking-[1em] opacity-30">
-               Versão Desktop 4.5
+               Versão Desktop 4.6
             </div>
           </div>
         </div>
