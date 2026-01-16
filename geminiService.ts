@@ -2,10 +2,21 @@
 import { GoogleGenAI } from "@google/genai";
 import { Era } from './types';
 
-// Initialize the Google GenAI SDK with the API key from environment variables.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Proteção para evitar crash no GitHub Pages se process.env não estiver definido
+const getApiKey = () => {
+  try {
+    return process.env.API_KEY || "";
+  } catch (e) {
+    return "";
+  }
+};
+
+const apiKey = getApiKey();
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const getEraDescription = async (era: Era): Promise<string> => {
+  if (!ai) return `A humanidade avança para a ${era}.`;
+  
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -19,6 +30,8 @@ export const getEraDescription = async (era: Era): Promise<string> => {
 };
 
 export const getRandomEvent = async (era: Era, resources: string): Promise<string> => {
+  if (!ai) return "Um dia calmo passa na história.";
+  
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',

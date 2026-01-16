@@ -1,17 +1,21 @@
 
-const CACHE_NAME = 'ascension-v1';
+const CACHE_NAME = 'ascension-v2';
 const ASSETS = [
   './',
   './index.html',
+  './manifest.json',
   './index.tsx',
   './App.tsx',
   './constants.ts',
-  './types.ts'
+  './types.ts',
+  './geminiService.ts'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS).catch(err => console.warn("Aviso: Alguns assets não puderam ser cacheados offline", err));
+    })
   );
 });
 

@@ -3,7 +3,7 @@
   "name": "Industrial Ascension",
   "short_name": "Ascension",
   "description": "Lidere a evolução da humanidade em um estilo idle incremental.",
-  "start_url": "./",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#10b981",
