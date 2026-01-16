@@ -1,0 +1,18 @@
+
+{
+  "name": "Industrial Ascension",
+  "short_name": "Ascension",
+  "description": "Lidere a evolução da humanidade em um estilo idle incremental.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2092/2092663.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
